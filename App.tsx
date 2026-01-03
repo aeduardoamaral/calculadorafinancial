@@ -8,7 +8,9 @@ import {
   BrainCircuit,
   Mail,
   User,
-  Users
+  Users,
+  QrCode,
+  Smartphone
 } from 'lucide-react';
 import { CalculatorType } from './types.ts';
 import CompoundInterestCalc from './components/CompoundInterestCalc.tsx';
@@ -19,14 +21,15 @@ import AdUnit from './components/AdUnit.tsx';
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<CalculatorType>(CalculatorType.COMPOUND_INTEREST);
   const [onlineUsers, setOnlineUsers] = useState(Math.floor(Math.random() * (800 - 300 + 1)) + 300);
+  const [currentUrl, setCurrentUrl] = useState('');
 
-  // Efeito para simular usuários online flutuando
   useEffect(() => {
+    setCurrentUrl(window.location.href);
+    
     const interval = setInterval(() => {
       setOnlineUsers(prev => {
-        const change = Math.floor(Math.random() * 7) - 3; // Flutua entre -3 e +3
+        const change = Math.floor(Math.random() * 7) - 3;
         const newValue = prev + change;
-        // Mantém dentro do range 300-800
         return Math.min(800, Math.max(300, newValue));
       });
     }, 4000);
@@ -39,12 +42,14 @@ const App: React.FC = () => {
     { id: CalculatorType.SAVINGS_GOAL, name: 'Metas de Economia', icon: Target },
   ];
 
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(currentUrl || 'https://finansmart.app')}&color=4f46e5`;
+
   return (
     <div className="h-screen w-screen overflow-hidden bg-slate-100 flex items-start justify-center">
-      {/* Container com Escala de 80% para enquadramento total (100 / 0.8 = 125) */}
+      {/* Container com Escala de 80% para enquadramento total */}
       <div className="w-[125%] h-[125%] scale-[0.8] origin-top transform flex flex-col md:flex-row bg-slate-50 text-slate-900 overflow-hidden">
         
-        {/* Sidebar Esquerda - Navegação e Publicidade */}
+        {/* Sidebar Esquerda - Navegação, QR Code e Publicidade */}
         <aside className="w-full md:w-64 bg-white border-r border-slate-200 p-5 flex flex-col gap-4 overflow-y-auto shrink-0">
           <div className="flex items-center gap-3 mb-2 shrink-0">
             <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-sm">
@@ -70,18 +75,38 @@ const App: React.FC = () => {
             ))}
           </nav>
 
+          {/* Card de IA Insights */}
           <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shrink-0">
             <div className="flex items-center gap-2 mb-2 text-indigo-600">
               <BrainCircuit size={16} />
               <span className="text-xs font-bold uppercase tracking-widest text-[9px]">IA Insights</span>
             </div>
             <p className="text-[11px] text-slate-500 leading-relaxed">
-              Nossa IA analisa seus cálculos para oferecer estratégias personalizadas.
+              Análises inteligentes para potencializar seus resultados financeiros.
             </p>
           </div>
 
-          {/* Espaço de Publicidade na Sidebar Esquerda - Flexível (Reduzido para 1 banner) */}
-          <div className="flex-1 flex flex-col min-h-0 mt-4 pt-4 border-t border-slate-100">
+          {/* QR Code de Acesso Mobile */}
+          <div className="bg-indigo-50/30 rounded-2xl p-4 border border-indigo-100/50 flex flex-col items-center gap-3 shrink-0 transition-all hover:bg-indigo-50/50 group">
+            <div className="flex items-center gap-2 w-full justify-start text-indigo-600 mb-1">
+              <Smartphone size={14} />
+              <span className="text-[10px] font-bold uppercase tracking-wider">Acesso Mobile</span>
+            </div>
+            <div className="bg-white p-2 rounded-xl shadow-sm border border-indigo-100 group-hover:scale-105 transition-transform duration-300">
+              <img 
+                src={qrCodeUrl} 
+                alt="QR Code Acesso Mobile" 
+                className="w-24 h-24"
+                loading="lazy"
+              />
+            </div>
+            <p className="text-[9px] text-slate-400 text-center leading-tight">
+              Escaneie para continuar seus cálculos no celular
+            </p>
+          </div>
+
+          {/* Espaço de Publicidade */}
+          <div className="flex-1 flex flex-col min-h-0 mt-2 pt-4 border-t border-slate-100">
             <div className="flex items-center justify-between mb-3 px-1 shrink-0">
               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Destaque</span>
             </div>
@@ -107,7 +132,6 @@ const App: React.FC = () => {
                 <div className="hidden sm:flex flex-col items-end gap-1">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Status do Sistema</span>
                   <div className="flex items-center gap-4 mt-1">
-                    {/* Usuários Online - Luz Âmbar */}
                     <div className="flex items-center gap-2 px-3 py-1 bg-amber-50 rounded-full border border-amber-100 transition-all">
                       <div className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -118,8 +142,6 @@ const App: React.FC = () => {
                         {onlineUsers} online
                       </span>
                     </div>
-                    
-                    {/* Status Operacional - Luz Verde */}
                     <div className="flex items-center gap-2 text-emerald-500 text-xs font-bold">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                       Operacional
