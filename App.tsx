@@ -80,14 +80,13 @@ const App: React.FC = () => {
             </p>
           </div>
 
-          {/* Espaço de Publicidade na Sidebar Esquerda - Flexível */}
+          {/* Espaço de Publicidade na Sidebar Esquerda - Flexível (Reduzido para 1 banner) */}
           <div className="flex-1 flex flex-col min-h-0 mt-4 pt-4 border-t border-slate-100">
             <div className="flex items-center justify-between mb-3 px-1 shrink-0">
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Destaques</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Destaque</span>
             </div>
             <div className="flex-1 flex flex-col gap-4 min-h-0">
               <AdUnit variant="sidebar" slotId="LEFT_SIDEBAR_TOP" />
-              <AdUnit variant="sidebar" slotId="LEFT_SIDEBAR_BOTTOM" />
             </div>
           </div>
         </aside>
