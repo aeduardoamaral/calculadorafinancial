@@ -141,9 +141,12 @@ const App: React.FC = () => {
                   &copy; {new Date().getFullYear()} FinanSmart - Gestão Financeira Inteligente.
                 </p>
                 <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 text-slate-500 text-[13px]">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-[10px]">EA</div>
-                    <span className="font-medium text-slate-700">Eduardo Amaral</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-[10px] shadow-inner">EA</div>
+                    <div className="flex flex-col items-start leading-none">
+                      <span className="text-[10px] text-slate-400 uppercase font-bold tracking-tight mb-0.5">Desenvolvido por</span>
+                      <span className="font-bold text-slate-800">Eduardo Amaral</span>
+                    </div>
                   </div>
                   <a 
                     href="mailto:aeduardoamaral@gmail.com" 
