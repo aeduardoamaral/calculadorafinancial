@@ -41,8 +41,8 @@ const App: React.FC = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-slate-100 flex items-start justify-center">
-      {/* Container com Escala de 90% para enquadramento total */}
-      <div className="w-[111.11%] h-[111.11%] scale-[0.9] origin-top transform flex flex-col md:flex-row bg-slate-50 text-slate-900 overflow-hidden">
+      {/* Container com Escala de 80% para enquadramento total (100 / 0.8 = 125) */}
+      <div className="w-[125%] h-[125%] scale-[0.8] origin-top transform flex flex-col md:flex-row bg-slate-50 text-slate-900 overflow-hidden">
         
         {/* Sidebar Esquerda - Navegação e Publicidade */}
         <aside className="w-full md:w-64 bg-white border-r border-slate-200 p-5 flex flex-col gap-4 overflow-y-auto shrink-0">
